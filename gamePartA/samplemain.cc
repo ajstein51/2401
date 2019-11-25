@@ -6,12 +6,14 @@ Othello game.
 #include<iostream>
 #include "move.h"
 #include "game.h"
+#include "colors.h"
 using namespace std;
 using namespace main_savitch_14;
 
 
 int main(){
-   othello mygame;
+   // othello mygame; // gives an abstract error which means: there is simply no implementation for this
+   main_savitch_14::othello mygame;
    mygame.play();
 
 return 0;

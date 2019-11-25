@@ -14,27 +14,25 @@ using namespace std;
 
 class space{
     public:
-        space(){piece = "|   |"; chip = 64;}
+        space();
+        
         // changes the piece 
-        void flip(){
-            if(is_white()){
-                piece = "| O |";
-            }
-            else if(is_black()){
-                piece = "| X |";
-            }
-        }
+        void flip();
 
         // getter for the space
-        bool is_white()const{return (piece == "| X |");} // white is X
-        bool is_black()const{return (piece == "| O |");} // black is O
-        bool is_empty()const{return (piece == "|   |");}  // empty is blank
+        bool is_white()const; // white is X
+        bool is_black()const; // black is O
+        bool is_empty()const;  // empty is blank
 
         // setter for the space
-        void make_white(){piece = "| X |";}
-        void make_black(){piece = "| O |";}
-        void make_empty(){piece = "|   |";}
+        void make_white();
+        void make_black();
+        void make_empty();
         
+        // Color for the output here:
+        void color_output()const;
+        string get_color()const;
+
     private:
         int chip; // maybe 0 for black and 1 for white?
         string piece;

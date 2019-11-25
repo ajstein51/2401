@@ -10,8 +10,7 @@
 #include "move.h"     // Provides definition of the space class
 using namespace std;
 
-namespace main_savitch_14
-{
+namespace main_savitch_14{
     //*************************************************************************
     // STATIC MEMBER CONSTANTS
     // const int game::SEARCH_LEVELS;
@@ -53,7 +52,7 @@ namespace main_savitch_14
     {
 	string answer;
 	
-	display_message("Your move, please: ");
+	display_message("Your(White/X) move, please: ");
 	getline(cin, answer);
 	return answer;
     }
@@ -74,7 +73,7 @@ namespace main_savitch_14
 
     //*************************************************************************
     // PRIVATE FUNCTIONS (these are the same for every game)
-
+/*
     int game::eval_with_lookahead(int look_ahead, int beat_this)
     // Evaluate a board position with lookahead.
     // --int look_aheads:  How deep the lookahead should go to evaluate the move.
@@ -101,7 +100,7 @@ namespace main_savitch_14
         // The level is above 0, so try all possible opponent moves. Keep the
 	// value of the best of these moves from the opponent's perspective.
     	compute_moves(moves); 
-	// assert(!moves.empty( ));
+	 assert(!moves.empty( ));
     	best_value = INT_MIN;
     	while (!moves.empty( ))
     	{
@@ -130,7 +129,7 @@ namespace main_savitch_14
 	game* future;
 	
 	// Compute all legal moves that the computer could make.
-	compute_moves(moves);
+	//compute_moves(moves);
 	//assert(!moves.empty( ));
 	
 	// Evaluate each possible legal move, saving the index of the best
@@ -153,7 +152,7 @@ namespace main_savitch_14
 	// Make the best move.
 	make_move(best_move);
     }
-
+*/
     void game::make_human_move( )
     {
         string move;
@@ -168,15 +167,17 @@ namespace main_savitch_14
     }
 
 
-
+///////////////////////////////////////////////////////////
 	// these are the functions i have written:
+///////////////////////////////////////////////////////////
+
 void othello::display_status()const{
 	char row[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-	cout << "1 2 3 4 5 6 7 8" << endl;
+	cout << "    1    2    3    4    5    6    7    8  " << endl;
 	for(int i = 0; i < 8; ++i){
 		cout << row[i] << " ";
 		for(int j = 0; j < 8; ++j){
-			board[i][j];
+			board[i][j].color_output();
 		}
 		cout << "\n";
 	}
@@ -189,17 +190,217 @@ void othello::restart(){
 			board[i][j].make_empty();
 		}
 	}
-	char row[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}; 
 	board[3][3].make_white();
+	board[4][4].make_white();
 	board[3][4].make_black();
 	board[4][3].make_black();
-	board[4][4].make_white();
 }
 
-bool othello::is_legal(const string& move){
-
-
+bool othello::is_legal(const string& move)const{
+	int x, y;
+	x = (int)(move[0]-'A');
+	y = (int)(move[1]-'1');
+	
+	if(x < 8 && x >= 0 && y < 8 && y >= 0){
+	// Checks all eight sides to make sure its a legal move, will return true if it is legal and false if not
+		if(board[x][y].is_black() && board[x][y + 1].is_white()){
+			return false;
+		}	
+		else if(board[x][y].is_black() && board[x][y - 1].is_white()){
+			return false;
+		}
+		else if(board[x][y].is_black() && board[x - 1][y].is_white()){
+			return false;
+		}
+		else if(board[x][y].is_black() && board[x + 1][y].is_white()){
+			return false;
+		}
+		
+		else if(board[x][y].is_black() && board[x+1][y-1].is_white()){
+			return false;
+		}
+		else if(board[x][y].is_black() && board[x+1][y+1].is_white()){
+			return false;
+		}
+		else if(board[x][y].is_black() && board[x+1][y-1].is_white()){
+			return false;
+		}
+		else if(board[x][y].is_black() && board[x+1][y+1].is_white()){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	else{
+		if(board[x][y].is_white() && board[x][y + 1].is_black()){
+			return false;
+		}	
+		else if(board[x][y].is_white() && board[x][y - 1].is_black()){
+			return false;
+		}
+		else if(board[x][y].is_white() && board[x - 1][y].is_black()){
+			return false;
+		}
+		else if(board[x][y].is_white() && board[x + 1][y].is_black()){
+			return false;
+		}
+		
+		else if(board[x][y].is_white() && board[x+1][y-1].is_black()){
+			return false;
+		}
+		else if(board[x][y].is_white() && board[x+1][y+1].is_black()){
+			return false;
+		}
+		else if(board[x][y].is_white() && board[x+1][y-1].is_black()){
+			return false;
+		}
+		else if(board[x][y].is_white() && board[x+1][y+1].is_black()){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	
 }
+
+void othello::make_move(const string& move){ // just hard coded 
+	
+	if(move == "C5" || move == "C6" || move == "D6"){
+		board[3][4].flip();
+	}
+	if(move == "F3" || move == "F4" || move == "E3"){
+		board[4][3].flip();
+	}
+	
+}
+
+
+
+
+/* Un-needed functions i think?
+// The functions below are for the is_legal() function:
+bool othello::top_left(const string& move){
+	int x, y;
+	x = int(move[0]-'A');
+	y = int(move[1] - '1');
+	if(board[x][y].is_black() && board[x+1][y-1].is_white()){
+		return true;
+	}
+	return false;
+}
+
+bool othello::top_right(const string& move){
+	int x, y;
+	x = int(move[0]-'A');
+	y = int(move[1] - '1');
+	if(board[x][y].is_black() && board[x+1][y+1].is_white()){
+		return true;
+	}
+		return false;
+}
+
+bool othello::bottom_left(const string& move){
+	int x, y;
+	x = int(move[0]-'A');
+	y = int(move[1] - '1');
+	if(board[x][y].is_black() && board[x-1][y-1].is_white()){
+		return true;
+	}
+	return false;
+}
+
+bool othello::bottom_right(const string& move){
+	int x, y;
+	x = int(move[0]-'A');
+	y = int(move[1] - '1');
+	if(board[x][y].is_black() && board[x-1][y+1].is_white()){
+		return true;
+	}
+		return false;
+}
+
+bool othello::look_up(const string& move){
+	int x, y;
+	x = int(move[0]-'A');
+	y = int(move[1] - '1');
+	if(board[x][y].is_black() && board[x][y + 1].is_white()){
+		return true;
+	}
+		return false;
+}
+
+bool othello::look_down(const string& move){
+	int x, y;
+	x = int(move[0]-'A');
+	y = int(move[1] - '1');
+	if(board[x][y].is_black() && board[x][y - 1].is_white()){
+		return true;
+	}
+		return false;
+}
+
+bool othello::look_left(const string& move){
+	int x, y;
+	x = int(move[0]-'A');
+	y = int(move[1] - '1');
+	if(board[x][y].is_black() && board[x - 1][y].is_white()){
+		return true;
+	}
+		return false;
+}
+
+bool othello::look_right(const string& move){
+	int x, y;
+	x = int(move[0]-'A');
+	y = int(move[1] - '1');
+	if(board[x][y].is_black() && board[x + 1][y].is_white()){
+		return true;
+	}
+		return false;
+}
+*/
+
+// just to get the warnings/errors gone
+void othello::victory(){
+ cout << endl;
+}
+
+void othello::compute_moves(std::queue<std::string>& moves)const{
+cout << endl;
+}
+
+game* othello::clone()const{
+	return 0;
+}
+
+bool othello::is_game_over()const{
+	return false;
+}
+
+int othello::evaluate()const{
+	int x = 0, y = 0;
+	return x+y;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
