@@ -6,6 +6,8 @@
 #include <queue>      // Provides queue<string>
 #include <string>     // Provides string
 #include "game.h"     // Provides definition of game class
+#include "colors.h"   // Porivdes definition of color class
+#include "move.h"     // Provides definition of the space class
 using namespace std;
 
 namespace main_savitch_14
@@ -165,7 +167,41 @@ namespace main_savitch_14
 	make_move(move);
     }
 
+
+
+	// these are the functions i have written:
+void othello::display_status()const{
+	char row[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+	cout << "1 2 3 4 5 6 7 8" << endl;
+	for(int i = 0; i < 8; ++i){
+		cout << row[i] << " ";
+		for(int j = 0; j < 8; ++j){
+			board[i][j];
+		}
+		cout << "\n";
+	}
 }
 
-	
+void othello::restart(){
+	game::restart();
+	for(int i = 0; i < 8; ++i){
+		for(int j = 0; j < 8; ++j){
+			board[i][j].make_empty();
+		}
+	}
+	char row[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}; 
+	board[3][3].make_white();
+	board[3][4].make_black();
+	board[4][3].make_black();
+	board[4][4].make_white();
+}
 
+bool othello::is_legal(const string& move){
+
+
+}
+
+
+
+
+} // THIS NEEDS TO BE AT THE END OF EVERYTHING

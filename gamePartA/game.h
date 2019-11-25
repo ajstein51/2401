@@ -5,7 +5,7 @@
 #define MAIN_SAVITCH_GAME
 #include <queue>   // Provides queue<string>
 #include <string>  // Provides string
-
+#include "move.h"
 namespace main_savitch_14
 {
     class game
@@ -80,7 +80,24 @@ namespace main_savitch_14
 	void make_computer_move( );
 	void make_human_move( );
     };
+
+
+class othello:public game{
+	public:
+		othello(){f_move = 1;}
+		
+		// displays the board~~
+		void display_status()const;
+
+		// this restarts the entire game, starting from the beginning
+		void restart();
+
+		// gives a true or false (1 or 0) if the move is legal to do, should be called every move?
+		bool is_legal(const string& move);
+	private:
+		space board[8][8];
+		int f_move;
+};
+
 }
-
 #endif
-
