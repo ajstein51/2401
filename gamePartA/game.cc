@@ -202,6 +202,7 @@ bool othello::is_legal(const string& move)const{
 	y = (int)(move[1]-'1');
 	
 	if(x < 8 && x >= 0 && y < 8 && y >= 0){
+
 	// Checks all eight sides to make sure its a legal move, will return true if it is legal and false if not
 		if(board[x][y].is_black() && board[x][y + 1].is_white()){
 			return false;
@@ -231,8 +232,8 @@ bool othello::is_legal(const string& move)const{
 		else{
 			return true;
 		}
-	}
-	else{
+		
+	// starting stuff for white 
 		if(board[x][y].is_white() && board[x][y + 1].is_black()){
 			return false;
 		}	
@@ -262,18 +263,17 @@ bool othello::is_legal(const string& move)const{
 			return true;
 		}
 	}
-	
 }
 
 void othello::make_move(const string& move){ // just hard coded 
-	
+	if(is_legal(move)){
 	if(move == "C5" || move == "C6" || move == "D6"){
 		board[3][4].flip();
 	}
 	if(move == "F3" || move == "F4" || move == "E3"){
 		board[4][3].flip();
 	}
-	
+	}
 }
 
 
@@ -376,7 +376,18 @@ game* othello::clone()const{
 }
 
 bool othello::is_game_over()const{
-	return false;
+	int j, total;
+	// basic counter to 6-
+	for(int i = 0; i < 8; i++){
+		for(j = 0; j < 8; j++){
+			total++;
+		}
+	}
+	// If total moves hits 60 then the game is over
+	if(total == 60)
+		return true;
+	else 
+		return false;
 }
 
 int othello::evaluate()const{
