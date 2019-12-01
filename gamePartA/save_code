@@ -1,0 +1,178 @@
+if(board[x][y].is_black() && board[x][y + 1].is_white()){
+			return true;
+		}	
+		else if(board[x][y].is_black() && board[x][y - 1].is_white()){
+			return true;
+		}
+		else if(board[x][y].is_black() && board[x - 1][y].is_white()){
+			return true;
+		}
+		else if(board[x][y].is_black() && board[x + 1][y].is_white()){
+			return true;
+		}
+		
+		else if(board[x][y].is_black() && board[x+1][y-1].is_white()){
+			return true;
+		}
+		else if(board[x][y].is_black() && board[x+1][y+1].is_white()){
+			return true;
+		}
+		else if(board[x][y].is_black() && board[x+1][y-1].is_white()){
+			return true;
+		}
+		else if(board[x][y].is_black() && board[x+1][y+1].is_white()){
+			return true;
+		}
+		else{
+            board[x][y].make_empty();
+			return false;
+		}
+		
+	// starting stuff for white 
+		if(board[x][y].is_white() && board[x][y + 1].is_black()){
+			return true;
+		}	
+		else if(board[x][y].is_white() && board[x][y - 1].is_black()){
+			return true;
+		}
+		else if(board[x][y].is_white() && board[x - 1][y].is_black()){
+			return true;
+		}
+		else if(board[x][y].is_white() && board[x + 1][y].is_black()){
+			return true;
+		}
+		
+		else if(board[x][y].is_white() && board[x+1][y-1].is_black()){
+			return true;
+		}
+		else if(board[x][y].is_white() && board[x+1][y+1].is_black()){
+			return true;
+		}
+		else if(board[x][y].is_white() && board[x+1][y-1].is_black()){
+			return true;
+		}
+		else if(board[x][y].is_white() && board[x+1][y+1].is_black()){
+			return true;
+		}
+		else{
+            board[x][y].make_empty();
+			return false;
+		}
+	}
+    else
+        return false;
+
+
+/////////////////////////
+//************************************************
+        if(game::next_mover() == HUMAN){
+            if(board[x-1][y].is_white() == true){
+                for(int i = x-1; i >= 0; i--){ 
+                    // keeps checking the entire board in that direction until it hits an empty space or black
+                    if(board[i][y].is_empty() == true)
+                        break;
+                    if(board[i][y].is_black() == true)
+                        return true;
+                }
+            }
+        }
+//************************************************
+		if(board[x+1][y].is_white() == true){
+            for(int i = x + 1; i < 8; i++){
+                if(board[i][y].is_empty() == true)
+                    break;
+            
+            if(board[i][y].is_black == true)
+                return true;
+            }
+        }
+//************************************************
+        if(board[x][y-1].is_white() == true){
+            for(int i = y -1; i >= 0; --i){
+         if(board[x][i].is_empty() == true){
+           break;
+         }
+         if(board[x][i].is_black() == true){
+           return true;
+         }
+       }
+     }
+//************************************************
+     if(board[x][y+1].is_white() == true)
+     {
+       for(int i = y + 1; i <= 7; ++i)
+       {
+         if(board[x][i].is_empty() == true)
+         {
+           return false;
+         }
+         if(board[x][i].is_black() == true)
+         {
+           return true;
+         }
+       }
+     }
+//************************************************
+    if(board[x-1][y-1].is_white() == true)
+     {
+       for(int i = x - 1, j = y -1; i >= 0 && j >= 0; --i, --j)
+       {
+         if(board[i][j].is_empty() == true)
+         {
+           break;
+         }
+         if(board[i][j].is_black() == true)
+         {
+           return true;
+         }
+       }
+     }
+//************************************************
+     if(board[x-1][y+1].is_white() == true)
+     {
+       for(int i = x - 1, j = y +1; i >= 0 && j <= 7; --i, ++j)
+       {
+         if(board[i][j].is_empty() == true)
+         {
+           break;
+         }
+         if(board[i][j].is_black() == true)
+         {
+           return true;
+         }
+       }
+     }
+//************************************************
+     if(board[x+1][y-1].is_white() == true)
+     {
+       for(int i = x + 1, j = y - 1; i <= 7 && j >= 0; ++i, --j)
+       {
+         if(board[i][j].is_empty() == true)
+         {
+           break;
+         }
+         if(board[i][j].is_black() == true)
+         {
+           return true;
+         }
+       }
+     }
+//************************************************
+     if(board[x+1][y+1].is_white() == true)
+     {
+       for(int i = x + 1, j = y +1; i <= 7 && j <= 7; ++i, ++j)
+       {
+         if(board[i][j].is_empty() == true)
+         {
+           break;
+         }
+         if(board[i][j].is_black() == true)
+         {
+           return true;
+         }
+       }
+     }
+//************************************************
+    else
+        return false;
+    

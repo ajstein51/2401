@@ -55,7 +55,7 @@ namespace main_savitch_14
 	// *******************************************************************
 	// (these must be provided for each derived class)
         // Return a pointer to a copy of myself:
-    	virtual game* clone( ) const = 0;
+//     	virtual game* clone( ) const = 0;
         // Compute all the moves that the next player can make:
     	virtual void compute_moves(std::queue<std::string>& moves) const = 0;
     	// Display the status of the current game:
@@ -66,7 +66,7 @@ namespace main_savitch_14
     	// Return true if the current game is finished:
     	virtual bool is_game_over( ) const = 0;
     	// Return true if the given move is legal for the next player:
-    	virtual bool is_legal(const std::string& move) const = 0;
+    	virtual bool is_legal(const std::string& move) = 0;
 
     private:
         // MEMBER VARIABLES
@@ -80,48 +80,6 @@ namespace main_savitch_14
 	void make_computer_move( );
 	void make_human_move( );
     };
-
-
-class othello:public game{
-	public:
-		othello(){f_move = 1;}
-		
-		// displays the board~~
-		void display_status()const;
-
-		// this restarts the entire game, starting from the beginning
-		void restart();
-
-		// gives a true or false (1 or 0) if the move is legal to do, should be called every move?
-		bool is_legal(const string& move)const;
-// bool is_legal(const std::string& move) const
-/*
-		// These functions server is legal:
-		bool look_up(const string& move);
-		bool look_down(const string& move);
-		bool look_left(const string& move);
-		bool look_right(const string& move);
-		bool top_left(const string& move);
-		bool top_right(const string& move);
-		bool bottom_left(const string& move);
-		bool bottom_right(const string& move);
-*/
-		
-		// makes a move and checks to see if its legal using the is_legal function written above
-		void make_move(const string& move);
-	
-	// to avoid errors
-		bool is_game_over()const;
-		void victory();
-		void compute_moves(std::queue<std::string>& moves)const;
-		game* clone()const;
-    	int evaluate()const;
-
-	private:
-		space board[8][8];
-		int f_move;
-		string move;
-};
 
 } // THIS NEEDS TO BE AT THE BOTTOM
 #endif

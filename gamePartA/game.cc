@@ -26,14 +26,15 @@ namespace main_savitch_14{
 	restart( );
 // Note that as you develop the game you will be gradually un-commenting 
 // this function.	
-	//while (!is_game_over( )) // un-comment this
-	//{
+	cout << "\nThe game will start with Black (O) then go onto Whites turn (X). This process will repeat until someone wins, or 60 turns are reached.\n" << endl;
+	while (!is_game_over( )) // un-comment this
+	{
 	    display_status( );
 	//    if (last_mover( ) == COMPUTER)
 		make_human_move( );
 	//    else
 	//	make_computer_move( );
-	//}
+	}
 	display_status( );
 	return HUMAN;
     }
@@ -52,7 +53,7 @@ namespace main_savitch_14{
     {
 	string answer;
 	
-	display_message("Your(White/X) move, please: ");
+	display_message("Your move, please: ");
 	getline(cin, answer);
 	return answer;
     }
@@ -156,7 +157,7 @@ namespace main_savitch_14{
     void game::make_human_move( )
     {
         string move;
-
+	
 	move = get_user_move( );
 	while (!is_legal(move))
 	{
@@ -165,254 +166,6 @@ namespace main_savitch_14{
         }
 	make_move(move);
     }
-
-
-///////////////////////////////////////////////////////////
-	// these are the functions i have written:
-///////////////////////////////////////////////////////////
-
-void othello::display_status()const{
-	char row[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-	cout << "    1    2    3    4    5    6    7    8  " << endl;
-	for(int i = 0; i < 8; ++i){
-		cout << row[i] << " ";
-		for(int j = 0; j < 8; ++j){
-			board[i][j].color_output();
-		}
-		cout << "\n";
-	}
-}
-
-void othello::restart(){
-	game::restart();
-	for(int i = 0; i < 8; ++i){
-		for(int j = 0; j < 8; ++j){
-			board[i][j].make_empty();
-		}
-	}
-	board[3][3].make_white();
-	board[4][4].make_white();
-	board[3][4].make_black();
-	board[4][3].make_black();
-}
-
-bool othello::is_legal(const string& move)const{
-	int x, y;
-	x = (int)(move[0]-'A');
-	y = (int)(move[1]-'1');
-	
-	if(x < 8 && x >= 0 && y < 8 && y >= 0){
-
-	// Checks all eight sides to make sure its a legal move, will return true if it is legal and false if not
-		if(board[x][y].is_black() && board[x][y + 1].is_white()){
-			return false;
-		}	
-		else if(board[x][y].is_black() && board[x][y - 1].is_white()){
-			return false;
-		}
-		else if(board[x][y].is_black() && board[x - 1][y].is_white()){
-			return false;
-		}
-		else if(board[x][y].is_black() && board[x + 1][y].is_white()){
-			return false;
-		}
-		
-		else if(board[x][y].is_black() && board[x+1][y-1].is_white()){
-			return false;
-		}
-		else if(board[x][y].is_black() && board[x+1][y+1].is_white()){
-			return false;
-		}
-		else if(board[x][y].is_black() && board[x+1][y-1].is_white()){
-			return false;
-		}
-		else if(board[x][y].is_black() && board[x+1][y+1].is_white()){
-			return false;
-		}
-		else{
-			return true;
-		}
-		
-	// starting stuff for white 
-		if(board[x][y].is_white() && board[x][y + 1].is_black()){
-			return false;
-		}	
-		else if(board[x][y].is_white() && board[x][y - 1].is_black()){
-			return false;
-		}
-		else if(board[x][y].is_white() && board[x - 1][y].is_black()){
-			return false;
-		}
-		else if(board[x][y].is_white() && board[x + 1][y].is_black()){
-			return false;
-		}
-		
-		else if(board[x][y].is_white() && board[x+1][y-1].is_black()){
-			return false;
-		}
-		else if(board[x][y].is_white() && board[x+1][y+1].is_black()){
-			return false;
-		}
-		else if(board[x][y].is_white() && board[x+1][y-1].is_black()){
-			return false;
-		}
-		else if(board[x][y].is_white() && board[x+1][y+1].is_black()){
-			return false;
-		}
-		else{
-			return true;
-		}
-	}
-}
-
-void othello::make_move(const string& move){ // just hard coded 
-	if(is_legal(move)){
-	if(move == "C5" || move == "C6" || move == "D6"){
-		board[3][4].flip();
-	}
-	if(move == "F3" || move == "F4" || move == "E3"){
-		board[4][3].flip();
-	}
-	}
-}
-
-
-
-
-/* Un-needed functions i think?
-// The functions below are for the is_legal() function:
-bool othello::top_left(const string& move){
-	int x, y;
-	x = int(move[0]-'A');
-	y = int(move[1] - '1');
-	if(board[x][y].is_black() && board[x+1][y-1].is_white()){
-		return true;
-	}
-	return false;
-}
-
-bool othello::top_right(const string& move){
-	int x, y;
-	x = int(move[0]-'A');
-	y = int(move[1] - '1');
-	if(board[x][y].is_black() && board[x+1][y+1].is_white()){
-		return true;
-	}
-		return false;
-}
-
-bool othello::bottom_left(const string& move){
-	int x, y;
-	x = int(move[0]-'A');
-	y = int(move[1] - '1');
-	if(board[x][y].is_black() && board[x-1][y-1].is_white()){
-		return true;
-	}
-	return false;
-}
-
-bool othello::bottom_right(const string& move){
-	int x, y;
-	x = int(move[0]-'A');
-	y = int(move[1] - '1');
-	if(board[x][y].is_black() && board[x-1][y+1].is_white()){
-		return true;
-	}
-		return false;
-}
-
-bool othello::look_up(const string& move){
-	int x, y;
-	x = int(move[0]-'A');
-	y = int(move[1] - '1');
-	if(board[x][y].is_black() && board[x][y + 1].is_white()){
-		return true;
-	}
-		return false;
-}
-
-bool othello::look_down(const string& move){
-	int x, y;
-	x = int(move[0]-'A');
-	y = int(move[1] - '1');
-	if(board[x][y].is_black() && board[x][y - 1].is_white()){
-		return true;
-	}
-		return false;
-}
-
-bool othello::look_left(const string& move){
-	int x, y;
-	x = int(move[0]-'A');
-	y = int(move[1] - '1');
-	if(board[x][y].is_black() && board[x - 1][y].is_white()){
-		return true;
-	}
-		return false;
-}
-
-bool othello::look_right(const string& move){
-	int x, y;
-	x = int(move[0]-'A');
-	y = int(move[1] - '1');
-	if(board[x][y].is_black() && board[x + 1][y].is_white()){
-		return true;
-	}
-		return false;
-}
-*/
-
-// just to get the warnings/errors gone
-void othello::victory(){
- cout << endl;
-}
-
-void othello::compute_moves(std::queue<std::string>& moves)const{
-cout << endl;
-}
-
-game* othello::clone()const{
-	return 0;
-}
-
-bool othello::is_game_over()const{
-	int j, total;
-	// basic counter to 6-
-	for(int i = 0; i < 8; i++){
-		for(j = 0; j < 8; j++){
-			total++;
-		}
-	}
-	// If total moves hits 60 then the game is over
-	if(total == 60)
-		return true;
-	else 
-		return false;
-}
-
-int othello::evaluate()const{
-	int x = 0, y = 0;
-	return x+y;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
