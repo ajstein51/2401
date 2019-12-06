@@ -55,7 +55,7 @@ namespace main_savitch_14
 	// *******************************************************************
 	// (these must be provided for each derived class)
         // Return a pointer to a copy of myself:
-//     	virtual game* clone( ) const = 0;
+     	virtual game* clone( ) const = 0;
         // Compute all the moves that the next player can make:
     	virtual void compute_moves(std::queue<std::string>& moves) const = 0;
     	// Display the status of the current game:
@@ -66,7 +66,7 @@ namespace main_savitch_14
     	// Return true if the current game is finished:
     	virtual bool is_game_over( ) const = 0;
     	// Return true if the given move is legal for the next player:
-    	virtual bool is_legal(const std::string& move) = 0;
+    	virtual bool is_legal(const std::string& move) const = 0;
 
     private:
         // MEMBER VARIABLES

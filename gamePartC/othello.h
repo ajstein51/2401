@@ -6,7 +6,7 @@ using namespace std;
 
 class othello:public main_savitch_14::game{
 	public:
-		othello(){f_move = 1; move_number = 1;}
+		othello(){f_move = 1; move_number = 1;} // for part two
 		
 		// displays the board~~
 		void display_status()const;
@@ -15,7 +15,7 @@ class othello:public main_savitch_14::game{
 		void restart();
 
 		// gives a true or false (1 or 0) if the move is legal to do, should be called every move?
-		bool is_legal(const string& move);
+		bool is_legal(const string& move)const;
 /*
 		// These functions server is legal:
 		bool look_up(const string& move);
@@ -37,9 +37,11 @@ class othello:public main_savitch_14::game{
 		void compute_moves(std::queue<std::string>& moves)const;
 		
     	int evaluate()const;
+		game* clone() const;
 
 	private:
 		space board[8][8];
-		int f_move, move_number;
+		int f_move;
+		 int move_number; // for part two
 		string move;
 };

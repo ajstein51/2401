@@ -6,11 +6,10 @@
 #include <queue>      // Provides queue<string>
 #include <string>     // Provides string
 #include "game.h"     // Provides definition of game class
-#include "colors.h"   // Porivdes definition of color class
-#include "move.h"     // Provides definition of the space class
 using namespace std;
 
-namespace main_savitch_14{
+namespace main_savitch_14
+{
     //*************************************************************************
     // STATIC MEMBER CONSTANTS
     // const int game::SEARCH_LEVELS;
@@ -26,18 +25,19 @@ namespace main_savitch_14{
 	restart( );
 // Note that as you develop the game you will be gradually un-commenting 
 // this function.	
-	cout << B_BLACK << WHITE;
-	cout << "\nThe game will start with Black (O) then go onto Whites turn (X). This process will repeat until someone wins, or 60 turns are reached.\n" << endl;
 	while (!is_game_over( )) // un-comment this
 	{
 	    display_status( );
-	//    if (last_mover( ) == COMPUTER)
+	    if (last_mover( ) == COMPUTER)
+		//if(move_number % 2 ==0)
 		make_human_move( );
-	//    else
-	//	make_computer_move( );
+	    else
+		make_computer_move( );
 	}
 	display_status( );
-	return HUMAN;
+	return winning();// although the winning function is listed as 
+			// an optional override, you should write your 
+		        // own. It simply counts pieces.
     }
 
 
@@ -75,7 +75,7 @@ namespace main_savitch_14{
 
     //*************************************************************************
     // PRIVATE FUNCTIONS (these are the same for every game)
-/*
+
     int game::eval_with_lookahead(int look_ahead, int beat_this)
     // Evaluate a board position with lookahead.
     // --int look_aheads:  How deep the lookahead should go to evaluate the move.
@@ -102,7 +102,7 @@ namespace main_savitch_14{
         // The level is above 0, so try all possible opponent moves. Keep the
 	// value of the best of these moves from the opponent's perspective.
     	compute_moves(moves); 
-	 assert(!moves.empty( ));
+	// assert(!moves.empty( ));
     	best_value = INT_MIN;
     	while (!moves.empty( ))
     	{
@@ -131,7 +131,7 @@ namespace main_savitch_14{
 	game* future;
 	
 	// Compute all legal moves that the computer could make.
-	//compute_moves(moves);
+	compute_moves(moves);
 	//assert(!moves.empty( ));
 	
 	// Evaluate each possible legal move, saving the index of the best
@@ -154,11 +154,11 @@ namespace main_savitch_14{
 	// Make the best move.
 	make_move(best_move);
     }
-*/
+
     void game::make_human_move( )
     {
         string move;
-	
+
 	move = get_user_move( );
 	while (!is_legal(move))
 	{
@@ -168,6 +168,7 @@ namespace main_savitch_14{
 	make_move(move);
     }
 
+}
 
+	
 
-} // THIS NEEDS TO BE AT THE END OF EVERYTHING
